@@ -32,33 +32,15 @@
     </style>
 
     <iframe src="" frameborder="0" id="frame"></iframe>
-        <!-- CENTERED SEARCH + EMBEDDED VANTA -->
-        <div class="main-center">
-            <div style="width:100%; display:flex; flex-direction:column; align-items:center;">
-                <div class="search-wrapper">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input id="uv-search" type="text" placeholder="Search Vanta..." />
-                    <button onclick="(function(){const v=document.getElementById('uv-search').value.trim(); if(!v) return; let u=v; if(!u.includes('.')) u='https://www.google.com/search?q='+encodeURIComponent(u); else if(!u.startsWith('http://') && !u.startsWith('https://')) u='https://'+u; document.getElementById('vanta-embed').src=u; })()">Go</button>
-                </div>
+    <!-- LEFT-CORNER SEARCHBAR + EMBEDDED VANTA -->
+    <div class="search-wrapper" style="position:absolute; top:8px; left:8px; z-index:1100;">
+        <input type="text" placeholder="url" id="bar"><button onclick="nav()">Go</button>
+    </div>
+    <div class="content-area" style="width:100%; height:100%;">
+        <iframe id="vanta-embed" src="vanta.html"></iframe>
+    </div>
 
-                <div class="content-area" style="width:100%; max-width:1200px; margin-top:18px;">
-                    <iframe id="vanta-embed" src="vanta.html"></iframe>
-                </div>
-            </div>
-        </div>
-
-        <script>
-        document.getElementById('uv-search').addEventListener('keydown', function (e) {
-            if (e.key === 'Enter') {
-                const v = this.value.trim();
-                if (!v) return;
-                let u = v;
-                if (!u.includes('.')) u = 'https://www.google.com/search?q=' + encodeURIComponent(u);
-                else if (!u.startsWith('http://') && !u.startsWith('https://')) u = 'https://' + u;
-                document.getElementById('vanta-embed').src = u;
-            }
-        });
-        </script>
+        
 
     <script>
         const connection = new BareMux.BareMuxConnection("/sail/baremux/worker.js") // you could always use epoxy, but libcurl is better imo
@@ -78,7 +60,24 @@
         })
         scramjet.init()
 
-        // top-left search removed; keep proxy frame and scramjet initialization
+        function nav() {
+            let url = bar.value.trim()
+            if (!url) return;
+
+            if (!url.includes(".")) {
+                url = "https://search.brave.com/search?q=" + encodeURIComponent(url)
+            } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url
+            }
+
+            frame.src = scramjet.encodeUrl(url)
+        }
+
+        bar.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                nav()
+            }
+        })
     </script>  
     
 </body>

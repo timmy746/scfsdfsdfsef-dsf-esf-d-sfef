@@ -20,12 +20,20 @@
             left:0;
             bottom: 0;
         }
+        #vanta-embed {
+            display: block;
+        }
+        #frame {
+            display: none;
+        }
     </style>
 
     <iframe src="" frameborder="0" id="frame"></iframe>
+    <iframe src="vanta.html" frameborder="0" id="vanta-embed"></iframe>
     <!-- LEFT-CORNER SEARCHBAR -->
     <div class="search-wrapper" style="position:absolute; top:8px; left:8px; z-index:1100;">
         <input type="text" placeholder="url" id="bar"><button onclick="nav()">Go</button>
+        <button onclick="resetToVanta()" style="margin-left:8px;">Reset</button>
     </div>
 
         
@@ -58,7 +66,17 @@
                 url = "https://" + url
             }
 
+            // hide vanta, show proxy frame
+            document.getElementById('vanta-embed').style.display = 'none';
+            document.getElementById('frame').style.display = 'block';
             frame.src = scramjet.encodeUrl(url)
+        }
+
+        function resetToVanta() {
+            // show vanta, hide proxy frame
+            document.getElementById('vanta-embed').style.display = 'block';
+            document.getElementById('frame').style.display = 'none';
+            bar.value = '';
         }
 
         bar.addEventListener("keydown", (e) => {

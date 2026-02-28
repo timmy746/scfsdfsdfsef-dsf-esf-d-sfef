@@ -12,32 +12,20 @@
 </head>
 <body>
     <style>
-        /* hide the original proxy iframe and make the vanta embed fill most of the viewport
-           leaving only the top search bar visible as a sliver */
-        #frame { display: none !important; }
-        #vanta-embed {
-            position: fixed;
-            top: 56px; /* leave space for the top search bar */
-            left: 0;
-            right: 0;
-            bottom: 0;
+        iframe {
+            height: 95vh;
             width: 100vw;
-            height: calc(100vh - 56px);
-            border: 0;
             background: #cfcfcf;
-            border-radius: 0;
+            position: absolute;
+            left:0;
+            bottom: 0;
         }
-        /* fallback for other iframes */
-        iframe:not(#vanta-embed) { display: none; }
     </style>
 
     <iframe src="" frameborder="0" id="frame"></iframe>
-    <!-- LEFT-CORNER SEARCHBAR + EMBEDDED VANTA -->
+    <!-- LEFT-CORNER SEARCHBAR -->
     <div class="search-wrapper" style="position:absolute; top:8px; left:8px; z-index:1100;">
         <input type="text" placeholder="url" id="bar"><button onclick="nav()">Go</button>
-    </div>
-    <div class="content-area" style="width:100%; height:100%;">
-        <iframe id="vanta-embed" src="vanta.html"></iframe>
     </div>
 
         

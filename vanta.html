@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Vanta</title>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
+
+<style>
+:root {
+  --sidebar-width: 60px;
+  --theme-primary: #1a237e;
+  --bg-dark: #0b0f2e;
+}
+ #title {
+    margin-top: 10vh;
+    text-align: center;
+    font-size: 6.8vw;
+    color: white;
+    font-family: "Special Gothic Expanded One", sans-serif;
+    opacity: 0; /* start invisible */
+    transition: opacity 0.8s ease; /* fade duration */
+  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+}
+
+/* VANTA BACKGROUND */
+#vanta-fog-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  bottom: 8px;
+  width: var(--sidebar-width);
+  background: rgba(10, 15, 50, 0.95);
+  border-radius: 22px;
+  box-shadow: 0 0 40px rgba(26,35,126,0.35), inset 0 0 20px rgba(26,35,126,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 0;
+  z-index: 1000;
+}
+
+.logo-container { width:45px; height:45px; margin-bottom:30px; display:flex; align-items:center; justify-content:center; border-radius:16px; background: rgba(26,35,126,0.12);} 
+.logo-container img { width:32px; height:32px; }
+.nav-group, .bottom-group { display:flex; flex-direction:column; gap:10px; }
+.nav-item { width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:16px; background:#1a237e6b; color:#fff; text-decoration:none }
+
+@keyframes pulse { 0%,100%{ box-shadow:0 0 40px rgba(26,35,126,0.35), inset 0 0 20px rgba(26,35,126,0.1);} 50%{box-shadow:0 0 55px rgba(26,35,126,0.6), inset 0 0 25px rgba(26,35,126,0.15);} }
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a class="logo-container"><img src="vo.png" alt="Logo"></a>
+  <div class="nav-group">
+    <a href="#" class="nav-item"><i class="fa-solid fa-house"></i></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-gamepad"></i></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-th-large"></i></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-robot"></i></a>
+  </div>
+  <div style="flex:1"></div>
+  <div class="bottom-group"><a href="#" class="nav-item"><i class="fa-solid fa-gear"></i></a></div>
+</nav>
+
+<h1 id="title">Voltage</h1>
+<div id="vanta-fog-container"></div>
+
+<!-- VANTA -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js"></script>
+<script>
+VANTA.FOG({
+  el: "#vanta-fog-container",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  highlightColor: 0x1a237e,
+  midtoneColor: 0x0b0f2e,
+  lowlightColor: 0x0f1240,
+  baseColor: 0x050923,
+  blurFactor: 0.9,
+  speed: 0.7,
+  zoom: 0.9
+});
+</script>
+
+</body>
+</html>

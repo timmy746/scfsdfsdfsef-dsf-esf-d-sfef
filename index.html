@@ -12,27 +12,66 @@
 </head>
 <body>
     <style>
-        iframe {
-            height: 95vh;
-            width: 100vw;
-            background: #cfcfcf;
-            position: absolute;
-            left:0;
-            bottom: 0;
-        }
+        /* Vanta covers the page as the homepage background (full viewport) */
         #vanta-embed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #cfcfcf;
             display: block;
+            z-index: 1000;
         }
-        #frame {
+
+        /* Floating square overlay for the proxy iframe */
+        #frame-overlay {
             display: none;
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 420px;
+            height: 420px;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1500;
+        }
+
+        #frame-overlay .close {
+            position: absolute;
+            right: 6px;
+            top: 6px;
+            z-index: 1210;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 0;
+        }
+
+        #frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
         }
     </style>
 
-    <iframe src="" frameborder="0" id="frame"></iframe>
+    <div id="frame-overlay">
+        <button class="close" id="close-overlay">×</button>
+        <iframe src="" frameborder="0" id="frame"></iframe>
+    </div>
+
     <iframe src="vanta.html" frameborder="0" id="vanta-embed"></iframe>
     <!-- LEFT-CORNER SEARCHBAR -->
-    <div class="search-wrapper" style="position:absolute; top:8px; left:8px; z-index:1100;">
-        <input type="text" placeholder="url" id="bar"><button onclick="nav()">Go</button>
+    <div class="search-wrapper" style="position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:1600;">
+        <input type="text" placeholder="url" id="bar" style="min-width:320px; padding:6px 8px;"> <button onclick="nav()">Go</button>
         <button onclick="resetToVanta()" style="margin-left:8px;">Reset</button>
     </div>
 
@@ -44,6 +83,8 @@
 
         const frame = document.getElementById("frame")
         const bar = document.getElementById("bar")
+        const overlay = document.getElementById("frame-overlay")
+        const closeOverlayBtn = document.getElementById("close-overlay")
 
         const { ScramjetController } = $scramjetLoadController()
         const scramjet = new ScramjetController({
@@ -65,19 +106,22 @@
             } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
                 url = "https://" + url
             }
-
-            // hide vanta, show proxy frame
-            document.getElementById('vanta-embed').style.display = 'none';
-            document.getElementById('frame').style.display = 'block';
+            // show proxy in floating overlay without navigating away
+            overlay.style.display = 'block'
             frame.src = scramjet.encodeUrl(url)
         }
 
         function resetToVanta() {
-            // show vanta, hide proxy frame
-            document.getElementById('vanta-embed').style.display = 'block';
-            document.getElementById('frame').style.display = 'none';
+            // close overlay and clear the input
+            overlay.style.display = 'none'
+            frame.src = ''
             bar.value = '';
         }
+
+        closeOverlayBtn.addEventListener('click', () => {
+            overlay.style.display = 'none'
+            frame.src = ''
+        })
 
         bar.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {

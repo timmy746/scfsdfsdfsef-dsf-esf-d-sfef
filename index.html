@@ -172,10 +172,95 @@
     i {
   color: white;
 }
+
+.title {
+    position: fixed; /* stay in place relative to viewport */
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1100; /* above Vanta (1000), below frame-overlay (1500) */
+
+    font-size: 67px;
+    font-weight: 700;
+    text-align: center;
+
+    /* Vertical gradient: dark navy → bright blue */
+    background: linear-gradient(to top, rgba(30,44,145,0.95), #0632f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Glow matching the dark navy bottom */
+    text-shadow:
+        0 0 10px rgba(10,31,68,0.8),
+        0 0 20px rgba(10,31,68,0.6),
+        0 0 40px rgba(10,31,68,0.5);
+
+    pointer-events: none;
+
+    animation: none;
+}
+.daily-quote {
+    position: fixed; /* stay in place relative to viewport */
+    top: 59%;        /* slightly below the title at 35% */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1100;   /* above Vanta embed, same as title */
+
+    font-size: 27px;  /* smaller than title but proportional */
+    font-weight: 700;
+    text-align: center;
+
+    /* Vertical gradient: dark navy → bright blue (matches title) */
+    background: linear-gradient(to top, rgba(30,44,145,0.95), #0632f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Glow matching the dark navy bottom (same style as title) */
+    text-shadow:
+        0 0 10px rgba(10,31,68,0.8),
+        0 0 20px rgba(10,31,68,0.6),
+        0 0 40px rgba(10,31,68,0.5);
+
+    padding: 10px 20px;
+    border-radius: 8px;
+    min-width: 200px;
+
+    pointer-events: none;
+}
+
+.daily-quote span {
+    color: inherit;
+    text-shadow: inherit; /* each character uses same gradient & glow */
+}
+.subtitle {
+    position: fixed;
+    top: 45%;             /* right under the title */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1100;        /* same as title & daily quote */
+
+    font-size: 30px;      /* smaller than title */
+    font-weight: 700;
+    text-align: center;
+
+    /* Same vertical gradient as title */
+    background: linear-gradient(to top, rgba(30,44,145,0.95), #0632f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Same glow as title */
+    text-shadow:
+        0 0 10px rgba(10,31,68,0.8),
+        0 0 20px rgba(10,31,68,0.6),
+        0 0 40px rgba(10,31,68,0.5);
+
+    pointer-events: none;
+}
 </style>
 </head>
 <body>
-
+<h1 class="title">Welcome to voltage</h1>
+<h2 class="subtitle">an amazing proxy made with scramjet</h2> <div class="daily-quote"></div>
 <!-- Floating proxy overlay -->
 <div id="frame-overlay">
     <button class="close" id="close-overlay">×</button>
@@ -256,7 +341,35 @@
     function launchEruda() { console.log("Eruda launched"); }
     function home() { resetToVanta(); }
 </script>
+<script>
+    const quotes = [
+  "tsk tsk tsk 🐈",
+  "dont use this site",
+  "💬Join rn: https://discord.gg/jgrJH48C7n",
+  "A wild volt has appeared 🐈",
+  "...",
+  "fien fien fien 🎶",
+  "zayhum🧊🥶",
+  "This used to be a google site",
+  "he had a taper and he was low so his memory faded🤔",
+  "my first site was called lofai 🤮",
+];
 
+function setRandomQuote() {
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  const quoteElement = document.querySelector('.daily-quote');
+  quoteElement.innerHTML = "";
+
+  // Wrap each character in span (optional, still static)
+  randomQuote.split("").forEach(char => {
+    const span = document.createElement("span");
+    span.textContent = char;
+    quoteElement.appendChild(span);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', setRandomQuote);
+</script>
 </body>
 </html>
 </html>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sail - Scramjet</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Sail scripts -->
 <script src="/sail/baremux/index.js"></script>
@@ -16,6 +17,9 @@
 <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css">
 
 <style>
+    body, input, button, textarea, select, * {
+    font-family: 'Figtree', sans-serif;
+}
     /* Vanta covers the page as the homepage background (full viewport) */
     #vanta-embed {
         position: fixed;
@@ -83,13 +87,32 @@
         gap: 6px;
     }
 
-    .browser-container input {
-        flex: 1;
-        padding: 6px 8px;
-        border-radius: 100px;
-        border: 1px solid rgba(10, 15, 50, 0.95);
-        background: #1a237e6b
-    }
+   .browser-container input {
+    flex: 1;
+    padding: 0 20px;             /* horizontal padding only */
+    height: 40px;                /* fixed height for centering */
+    border-radius: 100px;
+    border: 1px solid rgba(10, 15, 50, 0.95);
+    background: #1a237e6b;
+    color: white;
+    font-size: 16px;
+    text-align: center;           /* center horizontally */
+    line-height: 40px;            /* center vertically */
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Placeholder style */
+.browser-container input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;           /* horizontally centered */
+}
+
+/* Focus effect */
+.browser-container input:focus {
+    background: #1a237e9e; 
+    border-color: #001f5f;
+}
 
     .browser-container button {
         border: none;

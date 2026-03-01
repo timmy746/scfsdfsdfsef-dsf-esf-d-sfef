@@ -33,19 +33,23 @@
     }
 
     /* Floating box overlay for the proxy iframe */
-    #frame-overlay {
-        display: none;
-        position: fixed;
-        top: 75px;
-        left: 0%;
-        right: 0;
-        bottom: 20px;
-        background: #ffffff;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        border-radius: 8px;
-        overflow: hidden;
-        z-index: 1500;
-    }
+    /* Floating box overlay for the proxy iframe */
+#frame-overlay {
+    display: none;
+    position: fixed;
+    top: 75px; /* flush with top */
+    left: 80px; /* sidebar width + 3px gap */
+    right: 11px; /* 3px gap from right */
+    bottom: 3px; /* 3px gap from bottom */
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 12, 82, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1500;
+    background: rgba(10, 15, 50, 0.95); 
+    border: 3px solid rgba(10, 15, 50, 0.95);
+
+}
 
     #frame-overlay .close {
         position: absolute;
